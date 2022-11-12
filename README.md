@@ -6,6 +6,7 @@
 
 - README.md -- Instrucciones de uso del programa.
 - datos/ -- Carpeta que contiene todos los datasets de origen, procesados y finales para cargar en CARTO.
+Se incluyen los datos que no se han podido obtener de forma programática, como los datasets con la información de barrios y distritos, 
 - obtain_data -- Código para obtener automáticamente datos de portalestadistico.es e idealista.
 - transform -- Código para limpiar y procesar los datos brutos.
 - ML/ -- Código que aplica el algoritmo de ML a los datos previamente preparados.
