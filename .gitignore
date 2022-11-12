@@ -1,1 +1,10 @@
 /.DS_Store
+/datos/raw/autonomos
+/datos/raw/migracion
+/datos/raw/parados
+/datos/raw/poblacion
+/datos/raw/precios_alquiler_historico
+/datos/raw/precios_venta_historico
+/datos/raw/renta
+/datos/carto
+/datos/procesado
