@@ -19,7 +19,6 @@ def generate_datasets_kpis():
         df['fecha'] = pd.to_datetime(dict(year=df['Anyo'], month=1, day=1))
         df_autonomos= df_autonomos.append(df)
                                                                         
-    #df_final = pd.merge(df_barrios, df_autonomos, on='codigo_barrio')[['codigo_barrio','BARRIO_MAY','NOMDIS','the_geom','shape_area','shape_len','Anyo','codigo_distrito','autonomos','fecha']]
     df_autonomos = df_autonomos.groupby(['Anyo','codigo_distrito', 'codigo_barrio'])['autonomos'].sum()
     df_autonomos.to_csv( "../../procesado/autonomos.csv", index=True, encoding='utf-8')
     print("Listo!\n")
@@ -38,7 +37,6 @@ def generate_datasets_kpis():
         df['fecha'] = pd.to_datetime(dict(year=df['Anyo'], month=1, day=1))
         df_migracion= df_migracion.append(df)
 
-    #df_final = pd.merge(df_barrios, df_migracion, on='codigo_barrio')[['codigo_barrio','BARRIO_MAY','NOMDIS','tasa_migracion','Anyo','codigo_distrito','the_geom','shape_area','shape_len','fecha']]
     df_migracion = df_migracion.loc[df_migracion['tasa_extranjeros'] > 0]
     df_migracion = df_migracion.groupby(['Anyo','codigo_distrito', 'codigo_barrio'])['tasa_extranjeros'].sum()
 
@@ -61,7 +59,6 @@ def generate_datasets_kpis():
         df['fecha'] = pd.to_datetime(dict(year=df['Anyo'], month=df['Periodos'], day=1))
 
         df_parados= df_parados.append(df)
-    #df_final = pd.merge(df_barrios, df_parados, on='codigo_barrio')[['codigo_barrio','BARRIO_MAY','NOMDIS','parados','Anyo','codigo_distrito','the_geom','shape_area','shape_len','fecha']]
     df_parados = df_parados.groupby(['Anyo','codigo_distrito', 'codigo_barrio'])['parados'].sum()
     df_parados.to_csv( "../../procesado/parados.csv", index=True, encoding='utf-8')
     print("Listo!\n")
@@ -80,7 +77,6 @@ def generate_datasets_kpis():
         df['fecha'] = pd.to_datetime(dict(year=df['Anyo'], month=1, day=1))
 
         df_poblacion= df_poblacion.append(df)
-    #df_final = pd.merge(df_barrios, df_poblacion, on='codigo_barrio')[['codigo_barrio','BARRIO_MAY','NOMDIS','poblacion','Anyo','codigo_distrito','the_geom','shape_area','shape_len','fecha']]
     df_poblacion = df_poblacion.groupby(['Anyo','codigo_distrito', 'codigo_barrio'])['poblacion'].sum()
     df_poblacion.to_csv( "../../procesado/poblacion.csv", index=True, encoding='utf-8')
 
@@ -101,7 +97,6 @@ def generate_datasets_kpis():
         df['fecha'] = pd.to_datetime(dict(year=df['Anyo'], month=1, day=1))
 
         df_renta= df_renta.append(df)
-    #df_final = pd.merge(df_barrios, df_renta, on='codigo_barrio')[['codigo_barrio','BARRIO_MAY','NOMDIS','renta','Anyo','codigo_distrito','the_geom','shape_area','shape_len','fecha']]
     df_renta = df_renta.groupby(['Anyo','codigo_distrito', 'codigo_barrio'])['renta'].sum()
     df_renta.to_csv( "../../procesado/renta.csv", index=True, encoding='utf-8')
     print("Listo!\n")
@@ -135,7 +130,6 @@ def generate_datasets_kpis():
 
     df_incidentes = df_incidentes.groupby(['Anyo','codigo_distrito'])['incidentes_por_distrito'].sum()
     #dist_df = pd.read_csv('../distritos.csv',header=0).rename(columns={'coddistrit':'cod_distrito'})
-    #df_final = pd.merge(dist_df, df_incidentes, on='cod_distrito')[['nombre','the_geom','Anyo','cod_distrito','incidentes_por_distrito','fecha']]
     df_incidentes.to_csv('../../procesado/incidentes.csv', index=True)
 
     print("Listo!\n")
@@ -151,7 +145,6 @@ def generate_datasets_kpis():
     df_hogar['tamanyo_hogar'] = [x.replace(',', '.') for x in df_hogar['tamanyo_hogar']]
     df_hogar['tamanyo_hogar'] = df_hogar['tamanyo_hogar'].astype(float)
     df_hogar = df_hogar[['Anyo','codigo_distrito','codigo_barrio','fecha','tamanyo_hogar']]
-    #df_final = pd.merge(df_barrios, df_hogar, on='codigo_barrio')[['codigo_barrio','BARRIO_MAY','NOMDIS','tamanyo_hogar','Anyo','cod_distrito','the_geom','shape_area','shape_len','fecha']]
     df_hogar = df_hogar.groupby(['Anyo','codigo_distrito', 'codigo_barrio'])['tamanyo_hogar'].sum()
     df_hogar.to_csv('../procesado/tamanyo_hogar.csv', index=True) 
     print("Listo!\n")
@@ -166,7 +159,6 @@ def generate_datasets_kpis():
     df_viviendas['total_viviendas'] = [x.replace('.', '') for x in df_viviendas['total_viviendas']]
     df_viviendas['total_viviendas'] = df_viviendas['total_viviendas'].astype(float)
     df_viviendas = df_viviendas[['Anyo','codigo_distrito','codigo_barrio','fecha','total_viviendas']]
-    #df_final = pd.merge(df_barrios, df_viviendas, on='codigo_barrio')[['codigo_barrio','BARRIO_MAY','NOMDIS','total_viviendas','Anyo','cod_distrito','the_geom','shape_area','shape_len','fecha']]
     df_viviendas = df_viviendas.groupby(['Anyo','codigo_distrito', 'codigo_barrio'])['total_viviendas'].sum()
     df_viviendas.to_csv('../procesado/viviendas.csv', index=True)
     print("Listo!\n")

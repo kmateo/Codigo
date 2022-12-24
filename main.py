@@ -12,7 +12,7 @@ while ans:
     ------------------------------------------------------
         1.Obtener datos de portalestadistico.es por barrio
         2.Obtener datos de idealista.
-        3.Generar datasets de kpis individuales.
+        3.Limpiar datos para generar datasets de kpis individuales.
         4.Generar dataset para cargar en CARTO.
         5.Aplicar algoritmo de clusterización.
         6.Salir

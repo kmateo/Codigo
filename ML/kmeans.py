@@ -9,7 +9,7 @@ import seaborn as sns
 
 def plot_elbow(sse, ks):
     fig, axis = plt.subplots(figsize=(9, 6))
-    axis.set_title('Elbow method for optimal k')
+    axis.set_title('Método del codo para una k óptima')
     axis.set_xlabel('k')
     axis.set_ylabel('SSE')
     plt.plot(ks, sse, marker='o')
@@ -19,7 +19,7 @@ def plot_elbow(sse, ks):
 
 def plot_silhouette(sils, ks):
     fig, axis = plt.subplots(figsize=(9, 6))
-    axis.set_title('Silhouette method')
+    axis.set_title('Método de la silueta')
     axis.set_xlabel('k')
     axis.set_ylabel('Silhouette')
     plt.plot(ks, sils, marker='o')
@@ -45,17 +45,17 @@ def silhouette_method(data):
         cluster_labels = clusterer.fit_predict(data)
         silhouette_avg = silhouette_score(data, cluster_labels)
         sils.append(silhouette_avg)
-        print("For n_clusters =", k, "The average silhouette_score is :",
+        print("Para n_clusters =", k, "La media para el método de la silueta:",
               silhouette_avg)
     plot_silhouette(sils, ks)
 
 
 def apply_kmeans():
-    # 1 Filter rows from 2010 and 2021 to calculate differences
+
     dataset = pd.read_csv('datos/procesado/kpis_for_ML.csv')
     df = dataset[dataset['Anyo'].isin([2010, 2021])]
 
-    # set 2010 values as negative and sum to calculate differences
+    # ponemos los valores de 2010 en negativo y los sumamos para calcular las diferencias
     kpis = ['incidentes_por_distrito', 'tasa_extranjeros',
             'parados', 'autonomos','tamanyo_hogar',
             'precio_alquiler_m2', 'precio_venta_m2', 'renta']
@@ -81,15 +81,15 @@ def apply_kmeans():
     for kpi in kpis:
         df[kpi] = np.round(df[kpi], 2)
 
-    # 2 Normalize
+    # 2 Normalizamos
     df2 = df.copy()
     df2 = df2.drop(columns=['codigo_barrio', 'nombre_barrio'])
-    x = df2.values  # returns a numpy array
+    x = df2.values  
     scaler = preprocessing.StandardScaler()
     x_scaled = scaler.fit_transform(x)
     df2 = pd.DataFrame(x_scaled)
 
-    # 3 Correlations
+    # 3 Correlaciones
     corr_matrix = df2.corr()
     corr_matrix = np.round(corr_matrix, 2)
     fig, ax = plt.subplots(figsize=(8, 6))
@@ -98,20 +98,18 @@ def apply_kmeans():
     plt.tight_layout()
     fig.show()
 
-    # Remove highly correlated variables
+    # Eliminamos las variables con una alta correlación
     df2 = df2.drop(columns=[1])
 
-    # try PCA
     pca = PCA(n_components=6)
     pca.fit(df2)
     print(f'Variancia explicada PCA: {pca.explained_variance_ratio_}')
 
-    # Optimal k
+    # k óptima
     silhouette_method(df2)
     elbow_method(df2)
-    # elbow 5 - silhouette 6 -> 6
 
-    # kmeans with k=5
+    # kmeans con k=5
     clusterer = KMeans(n_clusters=5, random_state=55)
     cluster_labels = clusterer.fit_predict(df2)
     df['cluster_k5'] = cluster_labels
